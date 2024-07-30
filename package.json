@@ -1,0 +1,21 @@
+{
+  "name": "x",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@yeger/vue-masonry-wall": "^5.0.12",
+    "nuxt": "^3.12.4",
+    "nuxt-svgo": "^4.0.2",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "sass": "^1.77.8"
+  }
+}
