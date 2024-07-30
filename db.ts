@@ -1,7 +1,6 @@
-import type { MenuLink } from "~/types/model";
+import type { MenuLink, User } from "~/types/model";
 
-export const menu: MenuLink[] =
-  [
+export const menu: MenuLink[] = [
     {
       id: 1,
       text: "Home",
@@ -62,4 +61,27 @@ export const menu: MenuLink[] =
       icon: "more",
       url: "/more"
     }
-  ];
+];
+export const user: User = {
+  id: 0,
+  name: 'Ilia',
+  lastname: 'Borisov',
+  nickname: 'fj',
+  description: 'Developing Products that Users Love',
+  personalSite: 'fj.com',
+  location: 'Earth',
+  job: 'Frontend Developer',
+  birthday: new Date(),
+  joinedDate: new Date(),
+  verified: true,
+  avatar: 'https://media.tenor.com/qn8JutHbzYgAAAAM/cat-cute.gif',
+  cover: 'https://www.catsbest.eu/wp-content/uploads/shutterstock_423592375_2560x800-1920x600.jpg',
+  stats: {
+    followers: 948,
+    following: 132
+  },
+  posts: [],
+  replies: [],
+  highlights: [],
+  media: [],
+}

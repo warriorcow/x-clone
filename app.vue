@@ -50,4 +50,10 @@ body * {
   border-left: 1px solid #eff3f4;
   border-right: 1px solid #eff3f4;
 }
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 </style>
