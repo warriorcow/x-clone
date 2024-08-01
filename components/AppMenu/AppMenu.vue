@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="menu">
+  <nav class="grid gap-1 sticky top-0">
     <AppMenuLogo />
     <AppMenuItem
       v-for="link in links"
@@ -18,15 +18,5 @@ defineProps<{
       :icon="link.icon"
       :text="link.text"
     />
-  </div>
+  </nav>
 </template>
-
-<style lang="scss" scoped>
-.menu {
-  display: grid;
-  align-self: self-start;
-  gap: 4px 0;
-  position: sticky;
-  top: 0;
-}
-</style>

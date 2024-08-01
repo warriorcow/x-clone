@@ -3,8 +3,14 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: false },
-  modules: ["nuxt-svgo"],
+  modules: [
+    "nuxt-svgo",
+    "@nuxtjs/tailwindcss"
+  ],
   svgo: {
-    autoImportPath: './assets/icons/',
+    defaultImport: 'component',
   },
+  css: [
+    '~/assets/css/tailwind.css' // ваш путь к стилям TailwindCSS
+  ]
 })

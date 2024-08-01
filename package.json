@@ -10,12 +10,16 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "@vueuse/components": "^10.11.0",
+    "@vueuse/core": "^10.11.0",
     "@yeger/vue-masonry-wall": "^5.0.12",
     "nuxt": "^3.12.4",
     "nuxt-svgo": "^4.0.2",
     "vue": "latest"
   },
   "devDependencies": {
-    "sass": "^1.77.8"
+    "sass": "^1.77.8",
+    "vite-svg-loader": "^5.1.0"
   }
 }

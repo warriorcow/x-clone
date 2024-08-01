@@ -1,40 +1,5 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
-  <div class="menu-logo">
-    <NuxtLink to="/" class="menu-logo__inner">
-      <svgo-logo class="menu-logo__icon "/>
-    </NuxtLink>
-  </div>
-
+  <NuxtLink class="inline-flex items-center p-4 no-underline text-xl hover:bg-gray-100 rounded-full w-max" to="/">
+    <svgo-logo class="w-6 h-6" />
+  </NuxtLink>
 </template>
-
-<style lang="scss" scoped>
-.menu-logo {
-  $self: &;
-
-  width: max-content;
-  margin-bottom: 10px;
-
-  &:hover {
-    #{$self}__inner {
-      background-color: #e5e5e5;
-    }
-  }
-
-  &__inner {
-    display: inline-flex;
-    padding: 12px;
-    color: var(--text-color);
-    border-radius: 30px;
-    transition: background-color 200ms;
-  }
-
-  &__icon {
-    block-size: 24px;
-    inline-size: 24px;
-  }
-}
-</style>

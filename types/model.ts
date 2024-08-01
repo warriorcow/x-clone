@@ -5,17 +5,24 @@ export interface MenuLink {
   icon: string
 }
 
+export interface ExternalParams {
+  text: string
+  link: string | null
+}
+
 export interface User {
   id: number
-  name: string
+  firstname: string
   lastname: string
   nickname: string
   description?: string
-  personalSite?: string
-  location: string
-  job: string
-  birthday: Date
-  joinedDate: Date
+  externals: {
+    personalSite?: ExternalParams
+    location: ExternalParams
+    job: ExternalParams
+    birthday: ExternalParams
+    joinedDate: ExternalParams
+  }
   verified: boolean
   avatar?: string
   cover?: string
@@ -27,4 +34,11 @@ export interface User {
   replies: any[]
   highlights: any[]
   media: any[]
+}
+
+export interface Trend {
+  id: number
+  category: string
+  title: string
+  postsCount: number
 }
