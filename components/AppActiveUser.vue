@@ -1,11 +1,11 @@
-<script setup lang="ts">
-import { user } from "~/db";
+<script setup lang="ts">;
+import { authUser } from "~/db";
 </script>
 
 <template>
   <div class="py-6 flex items-center">
     <UiUserBadge
-      :user="user"
+      :user="authUser"
     />
     <UiButton
       class="ml-auto"

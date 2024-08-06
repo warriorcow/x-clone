@@ -5,7 +5,7 @@ export function fakeUser(params: Partial<User> = {}): User {
     id: 0,
     firstname: 'Piter',
     lastname: 'Griffin',
-    nickname: 'family_guy',
+    nickname: '@family_guy',
     description: 'I love mock',
     externals: {
       job: {
@@ -36,10 +36,24 @@ export function fakeUser(params: Partial<User> = {}): User {
       followers: 999,
       following: 999
     },
-    posts: [],
-    replies: [],
-    highlights: [],
-    media: [],
+    tabs: {
+      posts: {
+        url: '',
+        data: ['posts']
+      },
+      replies: {
+        url: 'replies',
+        data: ['replies']
+      },
+      highlights: {
+        url: 'highlights',
+        data: ['highlights']
+      },
+      media: {
+        url: 'media',
+        data: ['media']
+      },
+    },
     ...params
   }
 }

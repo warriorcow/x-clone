@@ -12,7 +12,7 @@ const fullName = computed((): string => {
 </script>
 
 <template>
-  <NuxtLink class="flex gap-x-3" :to="`@${user.nickname}`">
+  <NuxtLink class="flex gap-x-3" :to="`/@${user.nickname}`">
     <div class="w-10 h-10 rounded-full overflow-hidden bg-white">
       <img :src="user.avatar" alt="">
     </div>
@@ -21,7 +21,7 @@ const fullName = computed((): string => {
         {{ fullName }}
         <svgo-verified
           v-if="user.verified"
-          class="w-5 h-5 ml-1"
+          class="w-5 h-5 ml-1 text-blue-500"
           filled
         />
       </div>

@@ -1,18 +1,30 @@
 <script setup lang="ts">
-import AppMenu from "~/components/AppMenu/AppMenu.vue";
 import AppSearch from "~/components/AppSearch.vue";
-import { menu } from './db.js'
 import UiStickyScrollBox from "~/components/ui/UiStickyScrollBox.vue";
-
-useHead({
-  title: 'X'
-})
+import { menu } from "~/db";
+import AppMenu from "~/components/AppMenu/AppMenu.vue";
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <main class="main px-4">
+    <div class="flex flex-col h-dvh sticky top-0">
+      <AppMenu :links="menu" />
+      <AppActiveUser class="mt-auto" />
+    </div>
+
+    <div class="h-full border-x border-gray-100">
+      <NuxtPage />
+    </div>
+    <UiStickyScrollBox>
+      <aside class="grid gap-y-4 pb-4">
+        <div class="sticky top-0 py-1 bg-white">
+          <AppSearch />
+        </div>
+        <AppRecommendation />
+        <AppTrends />
+      </aside>
+    </UiStickyScrollBox>
+  </main>
 </template>
 
 <style lang="scss">

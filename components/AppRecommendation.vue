@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import UiBox from "~/components/ui/UiBox.vue";
-import { friendsRecommendation } from "~/db";
+import { friendsRecommendation, authUser } from "~/db";
 
 const route = useRoute();
 
 const friendsRecommendationFiltered = computed(() => {
-  return friendsRecommendation.filter(user => user.nickname !== route.params.nickname);
+  return friendsRecommendation.filter(user => user.nickname !== authUser.nickname);
 })
 </script>
 

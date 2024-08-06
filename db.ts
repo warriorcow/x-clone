@@ -54,7 +54,7 @@ export const menu: MenuLink[] = [
       id: 9,
       text: "Profile",
       icon: "svgo-profile",
-      url: "@fj"
+      url: "/@fj"
     },
     // {
     //   id: 10,
@@ -63,46 +63,6 @@ export const menu: MenuLink[] = [
     //   url: "/more"
     // }
 ];
-export const user: User = {
-  id: 0,
-  firstname: 'Ilia',
-  lastname: 'Borisov',
-  nickname: 'fj',
-  description: 'Developing Products that Users Love',
-  externals: {
-    job: {
-      text: 'Frontend Developer',
-      link: null
-    },
-    location: {
-      text: 'Earth',
-      link: null
-    },
-    personalSite: {
-      text: 'fj.com',
-      link: 'https://fj.com/'
-    },
-    birthday: {
-      text: new Date().toDateString(),
-      link: null
-    },
-    joinedDate: {
-     text: new Date().toDateString(),
-     link: null
-    }
-  },
-  verified: true,
-  avatar: 'https://media.tenor.com/qn8JutHbzYgAAAAM/cat-cute.gif',
-  cover: 'https://www.catsbest.eu/wp-content/uploads/shutterstock_423592375_2560x800-1920x600.jpg',
-  stats: {
-    followers: 948,
-    following: 132
-  },
-  posts: [],
-  replies: [],
-  highlights: [],
-  media: [],
-};
 export const users: User[] = [
   fakeUser(  {
     id: 0,
@@ -138,11 +98,7 @@ export const users: User[] = [
     stats: {
       followers: 948,
       following: 132
-    },
-    posts: [],
-    replies: [],
-    highlights: [],
-    media: [],
+    }
   }),
   fakeUser({
     id: 1,
@@ -179,10 +135,24 @@ export const users: User[] = [
       followers: 1000,
       following: 500
     },
-    posts: [],
-    replies: [],
-    highlights: [],
-    media: [],
+    tabs: {
+      posts: {
+        url: '',
+        data: ['peter posts']
+      },
+      replies: {
+        url: 'replies',
+        data: ['peter replies']
+      },
+      highlights: {
+        url: 'highlights',
+        data: ['peter highlights']
+      },
+      media: {
+        url: 'media',
+        data: ['peter media']
+      },
+    }
   }),
   fakeUser({
     id: 2,
@@ -218,11 +188,7 @@ export const users: User[] = [
     stats: {
       followers: 500,
       following: 300
-    },
-    posts: [],
-    replies: [],
-    highlights: [],
-    media: [],
+    }
   }),
   fakeUser({
     id: 3,
@@ -258,11 +224,7 @@ export const users: User[] = [
     stats: {
       followers: 200,
       following: 100
-    },
-    posts: [],
-    replies: [],
-    highlights: [],
-    media: [],
+    }
   }),
   fakeUser({
     id: 4,
@@ -298,11 +260,7 @@ export const users: User[] = [
     stats: {
       followers: 600,
       following: 450
-    },
-    posts: [],
-    replies: [],
-    highlights: [],
-    media: [],
+    }
   }),
   fakeUser({
     id: 5,
@@ -338,13 +296,10 @@ export const users: User[] = [
     stats: {
       followers: 150,
       following: 200
-    },
-    posts: [],
-    replies: [],
-    highlights: [],
-    media: [],
+    }
   }),
 ]
+export const authUser = users[0];
 export const friendsRecommendation: User[] = [
   ...users
 ]

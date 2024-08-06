@@ -1,22 +1,16 @@
 <script setup lang="ts">
-import { user, users } from "~/db";
 import { concatName } from "~/helpers/concatName";
+import type { User } from "~/types/model";
+import {use} from "h3";
 
 const router = useRouter();
 
 const props = defineProps<{
-  nickname?: string
+  user: User
 }>();
 
-const currentUser = computed(() => {
-  if (props.nickname) {
-    return users.filter(user => user.nickname === props.nickname)[0];
-  }
-  return user
-});
-
 const fullName = computed(() => {
-  return concatName(currentUser.value.firstname, currentUser.value.lastname)
+  return concatName(props.user.firstname, props.user.lastname)
 });
 </script>
 
@@ -34,13 +28,13 @@ const fullName = computed(() => {
         <div class="flex items-center text-xl font-bold">
           {{ fullName }}
           <svgo-verified
-            v-if="currentUser.verified"
-            class="w-5 h-5 ml-1"
+            v-if="user.verified"
+            class="w-5 h-5 ml-1 text-blue-500"
             filled
           />
         </div>
         <div class="text-sm mt-1 text-gray-500">
-          {{ currentUser.posts.length }} posts
+          {{ user.tabs.posts.data.length }} posts
         </div>
       </div>
     </div>
@@ -48,16 +42,16 @@ const fullName = computed(() => {
     <div class="grid gap-y-1 mx-4">
       <div class="-mx-4 h-[200px] z-10">
         <img
-          :src="currentUser.cover"
+          :src="user.cover"
           alt=""
         >
       </div>
 
       <div class="flex justify-between py-3">
-        <div class="h-[132px] w-[132px] my-0.5 rounded-full overflow-hidden border-4 border-white -mt-[80px] -mb-[12px] z-10">
+        <div class="h-[132px] w-[132px] bg-blue-50 my-0.5 rounded-full overflow-hidden border-4 border-white -mt-[80px] -mb-[12px] z-10">
           <img
-            :src="currentUser.avatar"
-            :alt="`${currentUser.lastname}-avatar}`"
+            :src="user.avatar"
+            :alt="`${user.lastname}-avatar}`"
           >
         </div>
         <div class="flex gap-3">
@@ -78,21 +72,21 @@ const fullName = computed(() => {
         <div class="flex items-center text-xl font-bold">
           {{ fullName }}
           <svgo-verified
-            v-if="currentUser.verified"
-            class="w-5 h-5 ml-1"
+            v-if="user.verified"
+            class="w-5 h-5 ml-1 text-blue-500"
             filled
           />
         </div>
         <div class="text-sm mt-1 text-gray-500">
-          @{{ currentUser.nickname }}
+          @{{ user.nickname }}
         </div>
       </div>
 
-      <div>{{ currentUser.description }}</div>
+      <div>{{ user.description }}</div>
 
       <div class="flex flex-wrap gap-x-3 text-sm py-2">
         <component
-          v-for="(external, key) in currentUser.externals"
+          v-for="(external, key) in user.externals"
           :is="external?.link ? 'a' : 'div'"
           :href="external?.link"
           class="group flex text-gray-500"
@@ -101,7 +95,7 @@ const fullName = computed(() => {
             :is="`svgo-${key}`"
             class="w-5 h-5 mr-1"
           />
-          <span :class="{'group-hover:underline group-hover:text-blue-400': external?.link}">
+          <span :class="{'group-hover:underline group-hover:text-blue-500': external?.link}">
           {{ external.text }}
         </span>
         </component>
@@ -109,14 +103,15 @@ const fullName = computed(() => {
 
       <div class="flex gap-3">
         <div class="flex gap-1 items-center text-sm">
-          <span class="font-bold">{{ currentUser.stats.following }}</span>
+          <span class="font-bold">{{ user.stats.following }}</span>
           <span class="text-gray-500">Following</span>
         </div>
         <div class="flex gap-1 items-center text-sm">
-          <span class="font-bold">{{ currentUser.stats.followers }}</span>
+          <span class="font-bold">{{ user.stats.followers }}</span>
           <span class="text-gray-500">Followers</span>
         </div>
       </div>
     </div>
+    <UiTabs :nickname="user.nickname" :tabs="user.tabs" />
   </section>
 </template>

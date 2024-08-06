@@ -9,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <nav class="grid gap-1 sticky top-0">
+  <nav class="grid gap-1">
     <AppMenuLogo />
     <AppMenuItem
       v-for="link in links"

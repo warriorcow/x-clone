@@ -2,7 +2,11 @@
 export default {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        'dynamic': 'repeat(auto-fit, minmax(0, 1fr))',
+      },
+    },
   },
   plugins: [],
 }

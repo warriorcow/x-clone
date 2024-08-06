@@ -30,10 +30,18 @@ export interface User {
     followers: number
     following: number
   }
-  posts: any[]
-  replies: any[]
-  highlights: any[]
-  media: any[]
+  tabs: Tabs
+}
+
+export interface Tabs {
+  posts: TabUser
+  replies: TabUser
+  highlights: TabUser
+  media: TabUser
+}
+export interface TabUser {
+  url: string
+  data: any[]
 }
 
 export interface Trend {

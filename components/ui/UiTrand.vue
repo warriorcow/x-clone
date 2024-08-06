@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex items-start">
     <div class="grid gap-y-1">
       <div class="text-sm text-gray-500">
         {{ params.category }}
@@ -16,7 +16,7 @@ defineProps<{
         {{ params.title }}
       </div>
       <div class="text-sm text-gray-500">
-        {{ params.postsCount }} posts
+<!--        {{ params.postsCount }} posts-->
       </div>
     </div>
     <UiButton
