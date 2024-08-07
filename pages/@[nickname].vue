@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { users, authUser } from "~/db";
 import type { User } from "~/types/model";
+import type {ChangeEvent} from "rollup";
 
 const route = useRoute();
 
@@ -23,6 +24,38 @@ const tabData = computed((): string[] => {
   const type = route.params.feed || 'posts';
   return userData.value.tabs[type].data;
 });
+
+const uploadData = ref(null)
+async function changeFile(event) {
+  const file: File = event.target.files[0];
+
+  async function getBase64(file) {
+    return await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+
+
+  uploadData.value = {
+    name: file.name,
+    file: await getBase64(file),
+    type: file.type
+  }
+}
+
+watch(() => uploadData.value, async () => {
+  await useFetch('/api/user-create', {
+    method: 'post',
+    headers: {
+      "Content-type": "multipart/form-data"
+    },
+    body: uploadData
+  })
+})
 </script>
 
 <template>
@@ -31,6 +64,8 @@ const tabData = computed((): string[] => {
 
     <div v-if="!route.params.feed">
       {{ tabData }}
+      <input @change="changeFile($event)" type="file">
+      {{uploadData}}
     </div>
     <NuxtPage v-else :tabData="tabData" />
   </div>
