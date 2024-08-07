@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { users, authUser } from "~/db";
 import type { User } from "~/types/model";
-import type {ChangeEvent} from "rollup";
+import { useUserStore } from "~/stores/user";
 
 const route = useRoute();
+const userStore = useUserStore();
+await useAsyncData('user', () => userStore.fetchUser())
 
 const isAuthUser = computed((): boolean => {
   return authUser.nickname === route.params.nickname;
@@ -26,6 +28,7 @@ const tabData = computed((): string[] => {
 });
 
 const uploadData = ref(null)
+
 async function changeFile(event) {
   const file: File = event.target.files[0];
 
@@ -37,8 +40,6 @@ async function changeFile(event) {
       reader.onerror = error => reject(error);
     });
   }
-
-
 
   uploadData.value = {
     name: file.name,
@@ -65,7 +66,8 @@ watch(() => uploadData.value, async () => {
     <div v-if="!route.params.feed">
       {{ tabData }}
       <input @change="changeFile($event)" type="file">
-      {{uploadData}}
+      <div class="test">{{ userStore.user[0] }}</div>
+
     </div>
     <NuxtPage v-else :tabData="tabData" />
   </div>

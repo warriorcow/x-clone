@@ -1,32 +1,51 @@
+import { serverSupabaseClient } from '#supabase/server';
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
-import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-)
 export default defineEventHandler(async (event) => {
-  try {
-    const body = await readBody(event);
+  const client = await serverSupabaseClient(event);
+  const body = await readBody(event);
+  const { email, password } = body;
 
-    const filePath = `${body.name}`
+  const { data, error } = await client.auth.signUp({
+    email,
+    password,
+  });
 
-    const res = await fetch(body.file)
-    const blob = await res.blob()
-
-    const response = await supabase.storage
-      .from("avatars")
-      .upload(filePath, blob, {
-        contentType: body.type,
-        upsert: true,
-      })
-
+  if (error) {
     return {
-      data: response.data,
-      error: response.error?.message,
-    }
-  } catch (error: any) {
-    return { error: error.message }
+      success: false,
+      message: error.message,
+      data
+    };
   }
-})
+
+  console.log(
+    {
+      data: {
+        userId: data.user?.id,
+        firstName: 'Илья',
+        lastName: 'Борисов',
+        birthDate: new Date(),
+        nickName: 'fj'
+      }
+    }
+  )
+
+  await prisma.userProfile.create({
+    data: {
+      id: data.user?.id,
+      firstName: 'Жопа',
+      lastName: 'Ручка',
+      nickName: 'jopa_ruchka',
+      birthDate: new Date('May 1, 1945 23:15:30'),
+      created_at: new Date()
+    }
+  })
+
+  return {
+    success: true,
+    data
+  };
+});
