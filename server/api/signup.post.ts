@@ -1,51 +1,41 @@
 import { serverSupabaseClient } from '#supabase/server';
 import { PrismaClient } from "@prisma/client";
+import { transliterate } from "~/helpers/transliterate";
 
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event);
   const body = await readBody(event);
-  const { email, password } = body;
+  const { email, password, firstname, lastname } = body;
 
   const { data, error } = await client.auth.signUp({
     email,
-    password,
+    password
   });
 
   if (error) {
     return {
       success: false,
       message: error.message,
-      data
+      redirectUrl: ''
     };
   }
 
-  console.log(
-    {
-      data: {
-        userId: data.user?.id,
-        firstName: 'Илья',
-        lastName: 'Борисов',
-        birthDate: new Date(),
-        nickName: 'fj'
-      }
-    }
-  )
+  const GENERATED_NICKNAME = transliterate(`${firstname} ${lastname}`.toLowerCase().replace(/ /g, "_"));
 
   await prisma.userProfile.create({
     data: {
       id: data.user?.id,
-      firstName: 'Жопа',
-      lastName: 'Ручка',
-      nickName: 'jopa_ruchka',
-      birthDate: new Date('May 1, 1945 23:15:30'),
+      firstname,
+      lastname,
+      nickname: GENERATED_NICKNAME,
       created_at: new Date()
     }
   })
 
   return {
     success: true,
-    data
+    redirectUrl: `/@${GENERATED_NICKNAME}`
   };
 });

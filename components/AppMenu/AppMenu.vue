@@ -17,6 +17,7 @@ defineProps<{
       :url="link.url"
       :icon="link.icon"
       :text="link.text"
+      :active="link.active"
     />
   </nav>
 </template>

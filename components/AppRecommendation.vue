@@ -1,20 +1,24 @@
 <script setup lang="ts">
 import UiBox from "~/components/ui/UiBox.vue";
-import { friendsRecommendation, authUser } from "~/db";
 
-const route = useRoute();
+const recommendUsersStore = useRecommendUsersStore();
+const { fetchRecommendUsers } = recommendUsersStore;
+const { recommendUsers } = storeToRefs(recommendUsersStore);
 
-const friendsRecommendationFiltered = computed(() => {
-  return friendsRecommendation.filter(user => user.nickname !== authUser.nickname);
+onBeforeMount(async () => {
+  await fetchRecommendUsers();
 })
 </script>
 
 <template>
-  <UiBox title="You might like">
-    <UiRecommendUser
-      v-for="user in friendsRecommendationFiltered"
-      :key="user.id"
-      :user="user"
-    />
+  <UiBox class="" title="You might like">
+      <template v-if="recommendUsers">
+        <UiRecommendUser
+          v-for="user in recommendUsers"
+          :key="user.id"
+          :user="user"
+        />
+      </template>
+      <UiLoadingIcon class="mx-auto" v-else />
   </UiBox>
 </template>

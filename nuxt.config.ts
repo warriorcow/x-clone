@@ -2,7 +2,7 @@
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-08-07',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: [
     'nuxt-svgo',
     '@nuxtjs/tailwindcss',
@@ -14,10 +14,15 @@ export default defineNuxtConfig({
   },
   supabase: {
     redirect: false,
+    // redirectOptions: {
+    //   login: '/signin',
+    //   exclude: ['/signup'],
+    //   callback: ''
+    // },
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY
   },
   css: [
-    '~/assets/css/tailwind.css'
+    '~/assets/css/tailwind.scss'
   ]
 })

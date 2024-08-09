@@ -2,12 +2,12 @@ import type { MenuLink, User, Trend } from "~/types/model";
 import {fakeTrend, fakeUser} from "~/fakeFactory";
 
 export const menu: MenuLink[] = [
-    {
-      id: 1,
-      text: "Home",
-      icon: "svgo-home",
-      url: "/"
-    },
+    // {
+    //   id: 1,
+    //   text: "Home",
+    //   icon: "svgo-home",
+    //   url: "/"
+    // },
     // {
     //   id: 2,
     //   text: "Explore",
@@ -315,20 +315,5 @@ export const trends: Trend[] = [
     id: 3,
     title: '#SCSS',
     category: 'Programming'
-  }),
-  fakeTrend({
-    id: 4,
-    title: '#Cat',
-    category: 'Pets'
-  }),
-  fakeTrend({
-    id: 5,
-    title: '#Elden Ring',
-    category: 'Games'
-  }),
-  fakeTrend({
-    id: 6,
-    title: '#Sandwiches',
-    category: 'Food'
   })
 ]

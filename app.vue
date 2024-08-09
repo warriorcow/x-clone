@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import AppMenu from "~/components/AppMenu/AppMenu.vue";
-import AppSearch from "~/components/AppSearch.vue";
-import { menu } from './db.js'
-import UiStickyScrollBox from "~/components/ui/UiStickyScrollBox.vue";
 
 useHead({
   title: 'X'
-})
+});
+
 </script>
 
 <template>
@@ -51,6 +48,5 @@ svg {
   width: 100%;
   height: 100%;
   box-sizing: content-box;
-  max-width: 50px;
 }
 </style>

@@ -9,17 +9,19 @@ datasource db {
 
 model UserProfile {
   id         String      @id @default(uuid())
-  firstName  String
-  lastName   String
+  firstname  String
+  lastname   String
   created_at DateTime?   @default(now()) @db.Timestamptz(6)
-  birthDate  DateTime?
-  nickName   String      @unique
+  birthdate  DateTime?
+  nickname   String      @unique
+  avatar     String?
+  cover      String?
   posts      UserPosts[]
 }
 
 model UserPosts {
   id          Int          @id @default(autoincrement())
-  userId      String? // Изменено на String
+  userId      String?
   description String
   title       String
   UserProfile UserProfile? @relation(fields: [userId], references: [id])

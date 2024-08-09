@@ -14,15 +14,28 @@ export default defineEventHandler(async (event) => {
     const blob = await res.blob()
 
     const response = await supabase.storage
-      .from("avatars")
+      .from(body.image_type)
       .upload(filePath, blob, {
         contentType: body.type,
-        upsert: true,
+        upsert: true
       })
 
+    const { data: { publicUrl } } = supabase.storage
+      .from(body.image_type)
+      .getPublicUrl(filePath)
+
+
+    await prisma.userProfile.update({
+      where: {
+        id: body.id
+      },
+      data: {
+        [body.image_type]: publicUrl
+      },
+    })
+
     return {
-      data: response.data,
-      error: response.error?.message,
+      data: publicUrl
     }
   } catch (error: any) {
     return { error: error.message }

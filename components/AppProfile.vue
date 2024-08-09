@@ -1,58 +1,78 @@
 <script setup lang="ts">
 import { concatName } from "~/helpers/concatName";
+import { useLogout } from "~/composables/useLogout";
 import type { User } from "~/types/model";
-import {use} from "h3";
+import { useUploadImage } from "~/composables/useUploadImage";
 
 const router = useRouter();
+const { isHomePage } = useUserStore();
 
 const props = defineProps<{
   user: User
 }>();
 
-const fullName = computed(() => {
-  return concatName(props.user.firstname, props.user.lastname)
+async function uploadAvatar({ target }) {
+  await useUploadImage('avatar', target.files[0]);
+}
+
+async function uploadCover({ target }) {
+  await useUploadImage('cover', target.files[0]);
+}
+
+const fullName = computed((): string => {
+  return concatName(props.user?.firstname, props.user?.lastname)
 });
 </script>
 
 <template>
   <section>
     <div class="flex items-center py-1 px-4 sticky top-0 z-20 backdrop-blur-sm bg-white bg-opacity-90">
-      <UiButton
-        @click="router.back()"
-        class="mr-9"
-        variant="simple"
-        icon="arrow"
-      />
-
+      <div class="mr-9">
+        <UiButton
+          @click="router.back()"
+          variant="simple"
+          icon="arrow"
+        />
+      </div>
       <div class="flex flex-col">
-        <div class="flex items-center text-xl font-bold">
+        <div class="flex items-center text-lg font-bold">
           {{ fullName }}
           <svgo-verified
-            v-if="user.verified"
+            v-if="user?.verified"
             class="w-5 h-5 ml-1 text-blue-500"
             filled
           />
         </div>
-        <div class="text-sm mt-1 text-gray-500">
-          {{ user.tabs.posts.data.length }} posts
+        <div class="text-sm text-gray-500">
+          {{ user?.posts?.data.length ? user?.posts?.data.length : 0 }} posts
         </div>
       </div>
     </div>
 
     <div class="grid gap-y-1 mx-4">
-      <div class="-mx-4 h-[200px] z-10">
+      <div class="relative -mx-4 h-[200px] z-10 bg-gray-300">
         <img
-          :src="user.cover"
+          v-if="user?.cover"
+          :src="user?.cover"
           alt=""
         >
+        <label v-if="isHomePage" class="cursor-copy absolute top-0 left-0 w-full h-full">
+          <input class="opacity-0 h-0 w-0" type="file" @change="uploadCover">
+        </label>
       </div>
 
       <div class="flex justify-between py-3">
-        <div class="h-[132px] w-[132px] bg-blue-50 my-0.5 rounded-full overflow-hidden border-4 border-white -mt-[80px] -mb-[12px] z-10">
+        <div class="flex items-center justify-center relative h-[132px] w-[132px] bg-blue-50 my-0.5 rounded-full overflow-hidden border-4 border-white -mt-[80px] -mb-[12px] z-10">
           <img
-            :src="user.avatar"
-            :alt="`${user.lastname}-avatar}`"
+            v-if="user?.avatar"
+            :src="user?.avatar"
+            :alt="`${user?.lastname}-avatar}`"
           >
+          <div v-else class="select-none text-6xl font-bold">?</div>
+          <label v-if="isHomePage" class="cursor-copy absolute top-0 left-0 w-full h-full">
+            <input class="opacity-0 h-0 w-0" type="file" @change="uploadAvatar">
+          </label>
+
         </div>
         <div class="flex gap-3">
           <UiButton
@@ -64,6 +84,7 @@ const fullName = computed(() => {
           <UiButton
             text="Follow"
             variant="filled"
+            @click="useLogout"
           />
         </div>
       </div>
@@ -72,21 +93,21 @@ const fullName = computed(() => {
         <div class="flex items-center text-xl font-bold">
           {{ fullName }}
           <svgo-verified
-            v-if="user.verified"
+            v-if="user?.verified"
             class="w-5 h-5 ml-1 text-blue-500"
             filled
           />
         </div>
         <div class="text-sm mt-1 text-gray-500">
-          @{{ user.nickname }}
+          <div>@{{ user?.nickname }}</div>
         </div>
       </div>
 
-      <div>{{ user.description }}</div>
+      <div v-if="user?.description">{{ user?.description }}</div>
 
       <div class="flex flex-wrap gap-x-3 text-sm py-2">
         <component
-          v-for="(external, key) in user.externals"
+          v-for="(external, key) in user?.externals"
           :is="external?.link ? 'a' : 'div'"
           :href="external?.link"
           class="group flex text-gray-500"
@@ -103,15 +124,15 @@ const fullName = computed(() => {
 
       <div class="flex gap-3">
         <div class="flex gap-1 items-center text-sm">
-          <span class="font-bold">{{ user.stats.following }}</span>
+<!--          <span class="font-bold">{{ user?.stats.following }}</span>-->
           <span class="text-gray-500">Following</span>
         </div>
         <div class="flex gap-1 items-center text-sm">
-          <span class="font-bold">{{ user.stats.followers }}</span>
+<!--          <span class="font-bold">{{ user?.stats.followers }}</span>-->
           <span class="text-gray-500">Followers</span>
         </div>
       </div>
     </div>
-    <UiTabs :nickname="user.nickname" :tabs="user.tabs" />
+<!--    <UiTabs :nickname="user?.nickname" :tabs="user?.tabs" />-->
   </section>
 </template>

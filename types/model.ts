@@ -1,8 +1,11 @@
+import {b} from "unplugin-vue-router/types-CEBdfPkN";
+
 export interface MenuLink {
   id: number
   url: string
   text: string
   icon: string
+  active?: boolean
 }
 
 export interface ExternalParams {
@@ -15,22 +18,26 @@ export interface User {
   firstname: string
   lastname: string
   nickname: string
-  description?: string
-  externals: {
-    personalSite?: ExternalParams
-    location: ExternalParams
-    job: ExternalParams
-    birthday: ExternalParams
-    joinedDate: ExternalParams
-  }
-  verified: boolean
-  avatar?: string
+  verified?: boolean
   cover?: string
-  stats: {
-    followers: number
-    following: number
-  }
-  tabs: Tabs
+  avatar?: string
+  posts?: TabUser
+  // description?: string
+  // externals: {
+  //   personalSite?: ExternalParams
+  //   location: ExternalParams
+  //   job: ExternalParams
+  //   birthday: ExternalParams
+  //   joinedDate: ExternalParams
+  // }
+  // verified: boolean
+  // avatar?: string
+  // cover?: string
+  // stats: {
+  //   followers: number
+  //   following: number
+  // }
+  // tabs: Tabs
 }
 
 export interface Tabs {

@@ -1,20 +1,23 @@
-<script setup lang="ts">;
-import { authUser } from "~/db";
+<script setup lang="ts">
+import { useLogout } from "~/composables/useLogout";
+
+const userStore = useUserStore();
+const { authUserProfile } = storeToRefs(userStore);
 </script>
 
 <template>
-  <div class="py-6 flex items-center">
+  <div
+    v-if="authUserProfile"
+    class="py-6 grid grid-cols-[1fr_36px] gap-x-3 items-center"
+  >
     <UiUserBadge
-      :user="authUser"
+      :user="authUserProfile"
     />
     <UiButton
+      @click="useLogout"
       class="ml-auto"
-      icon="multidot"
+      icon="logout"
       variant="simple"
     />
   </div>
 </template>
-
-<style scoped lang="scss">
-
-</style>

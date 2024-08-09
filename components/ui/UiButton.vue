@@ -1,17 +1,25 @@
 <script setup lang="ts">
+import { NuxtLink } from "#components";
+import type { Component } from "vue";
+import UiLoadingIcon from "~/components/ui/UiLoadingIcon.vue";
+
 const props = withDefaults(defineProps<{
   text?: string
   icon?: string
+  to?: string
+  loading?: boolean
+  expanded?: boolean
   variant?: 'filled' | 'default' | 'simple'
 }>(), {
   variant: 'default',
+  expanded: false,
   text: '',
   icon: ''
 })
 
 const isFilled = computed(() => {
   return props.variant === 'filled';
-})
+});
 
 const isDefault = computed(() => {
   return props.variant === 'default';
@@ -27,13 +35,20 @@ const hasText = computed(() => {
 
 const hasIcon = computed(() => {
   return props.icon.length;
+});
+
+const tag = computed((): Component | string => {
+  return props.to ? NuxtLink : 'button'
 })
 </script>
 
 <template>
-  <button
-    class="flex items-center justify-center rounded-full p-2 transition-colors"
+  <component
+    :is="tag"
+    :to="to"
+    class="flex items-center  max-h-12 justify-center rounded-full p-2 transition-colors"
     :class="{
+      'w-full': expanded,
       'bg-black text-white hover:bg-gray-900': isFilled,
       'bg-transparent border-2 hover:bg-gray-200': isDefault,
       'bg-transparent border-none hover:bg-gray-200': isSimple
@@ -52,5 +67,9 @@ const hasIcon = computed(() => {
       v-text="text"
       class="px-3 font-bold"
     />
-  </button>
+    <UiLoadingIcon
+      v-if="loading"
+      class="-mr-6"
+    />
+  </component>
 </template>
